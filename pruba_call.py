@@ -468,13 +468,23 @@ def load_from_np_file(filename):
     return array      
 
 
-array = load_from_np_file('PID2\experimento_pid_constants.bin')
-array = load_from_np_file('PID2\experimento_duty_cycle.bin')
 
-#array = load_from_np_file('PID2\experimento_pid_terminos.bin')
+array2 = load_from_np_file('PID3\experimento_raw_data.bin')
+
+#array = load_from_np_file('PID2\experimento1_pid_terminos.bin')
 
 
-plt.plot(array[:])
+plt.imshow(array2[:,:,0])
+
+plt.plot(array2[:,0],label='sem1')
+plt.plot(array2[:,1],label='sem2')
+#plt.plot(array2[:,2],label='sem3')
+#plt.plot(array2[:,3],label='sem4')
+#plt.plot(array2[:,4],label='sem5')
+plt.xlim([0,700])
+plt.ylim([0,5])
+plt.legend()
+
 plt.plot(array[210,:,0])
 
 #%%
@@ -618,3 +628,36 @@ a = 1
 b = 2
 
 c = hola(a,b)
+
+#%%
+
+ai_nbr_channels= 2
+ai_samples = 50000
+ai_samplerate = 500
+i = 0
+
+medicion = np.zeros([ai_nbr_channels,ai_samples])
+#medicion[0,:] = np.arange(0,ai_samples)
+tt = i*ai_samples/ai_samplerate + np.arange(ai_samples)/ai_samples/ai_samplerate
+medicion[0,:] = 2.1 + 1.0*np.sin(2*np.pi*2000*tt)# + np.random.rand(ai_samples)
+
+plt.plot(medicion[0,:])
+
+conv = np.ones(10000)/10000
+
+b = np.convolve(medicion[0,:],conv,mode='valid')
+
+plt.plot(b)
+
+
+
+a = np.array([1,2,3])
+np.sum(a[0:-1])
+
+
+
+
+
+
+
+
